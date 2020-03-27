@@ -2,7 +2,6 @@
 import React,{useState,useEffect} from 'react';
 import {
 	View,
-	Text,
 	BackHandler,
 	ToastAndroid,
     AsyncStorage,
@@ -11,7 +10,6 @@ import {
 	Router,
 	Scene,
 	Tabs,
-	Drawer,
 	Lightbox,
 	Modal,
 	Overlay,
@@ -34,62 +32,78 @@ const App = () => {
 	let [isInstall,setInstall] = useState(true);
 	let now = 0;
 	
-	useEffect(()=>{
+	let init=()=>{
 		AsyncStorage.getItem('isInstall')
 		.then(res=>{
+			// console.log('isinstall',res);
 			if(res){
 				setInstall(false);
 			}
 		})
-        AsyncStorage.getItem('user')
-        .then(res=>{
-			let user = JSON.parse(res)
-            // console.log(user)
-            if(!user){
-				SplashScreen.hide();
-            }
-            if(user){
-				setLogin(true);
-                console.log(user)
-                SplashScreen.hide();
-				console.log('2'+isLogin)
-			}
+		// AsyncStorage.clear();
+    	AsyncStorage.getItem('user')
+      	.then(res=>{
+        	let user=JSON.parse(res)
+        	if(!user){
+          	SplashScreen.hide();
+        	}
+        	if(user&&user.token){
+				console.log(user.token)
+          	setLogin(true);
+          	SplashScreen.hide();
+        	}
 		})
+	}
+	useEffect(()=>{
+		 init()
+
 	},[])
 	
-	let aka = () =>{
+	let afterInstall = ()=>{
+		// console.log('after install')
 		setInstall(false)
 	}
 	
 	if(isInstall){
 		return <View style={{flex:1}}>
-			<SwiperPages isFirst={aka} />
+			<SwiperPages isFirst={afterInstall} />
 		</View>
 	}
 	
 	return (
 		<Router
-		backAndroidHandler={()=>{
-			if(Actions.currentScene != 'home'){
-				Actions.pop();
-				return true;
-			}else{
-				if(new Date().getTime()-now<2000){
-					BackHandler.exitApp();
-				}else{
-					ToastAndroid.show('确定要退出吗',100);
-					now = new Date().getTime();
-					return true;
+			backAndroidHandler={()=>{
+				if(Actions.currentScene == '_home'){
+					if(new Date().getTime()-now<2000){
+						BackHandler.exitApp();
+					}else{
+						ToastAndroid.show('确定要退出吗',100);
+						now = new Date().getTime();
+						return true;
+					}
 				}
-			}
-		}}>
-			<Overlay>
+				else if(Actions.currentScene == 'login'){
+					if(new Date().getTime()-now<2000){
+						BackHandler.exitApp();
+					}else{
+						ToastAndroid.show('确定要退出吗',100);
+						now = new Date().getTime();
+						return true;
+					
+					}
+				}
+				else{
+					console.log(Actions.currentScene)
+					Actions.pop();
+          			return true;
+				}
+				
+			}}
+		>
+		<Overlay>
 				<Modal key="modal" hideNavBar>
 					<Lightbox key="lightbox">
-						<Drawer key="drawer"
-						contentComponent={()=><Text>drawer</Text>}
-						drawerIcon={()=><Icon name="menu"/>}
-						drawerWidth={400}>
+						
 
 							<Scene key="root">
 								<Tabs key='tabbar' hideNavBar
@@ -115,7 +129,6 @@ const App = () => {
 									</Scene>
 								</Tabs>
 							</Scene>
-						</Drawer>
 					</Lightbox>
 					<Scene initial={!isLogin} key="login" component={Hlogin}/>
 					<Scene key="register" component={Hregister}/>

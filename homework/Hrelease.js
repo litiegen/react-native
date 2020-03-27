@@ -70,7 +70,7 @@ export default class Hrelease extends Component {
             text1:{
                 fontSize:20,
                 marginTop:12,
-                marginLeft:140,
+                marginLeft:'30%',
                 color:'#ffffff',
                 fontWeight:'bold'
             },
@@ -78,7 +78,7 @@ export default class Hrelease extends Component {
                 width:100,
                 fontSize:35,
                 marginTop:10,
-                marginLeft:130,
+                marginLeft:'30%',
                 color:'#ffffff'
             },
             view1:{
@@ -132,12 +132,12 @@ export default class Hrelease extends Component {
                                         item.title.length>15?item.title.substr(0,15)+"...":item.title
                                     }
                                 </Text>
-                                <Text style={{marginLeft:20}}>
+                                <Text style={{marginLeft:'3%'}}>
                                     {
                                         item.create_at.length>10?item.create_at.substr(0,10):item.title
                                     }
                                 </Text>
-                                <Text style={{marginLeft:20}}>
+                                <Text style={{marginLeft:'3%'}}>
                                     {
                                         Math.round(Math.random(0,1))<1?<Text style={styles.top}>待回复</Text>:<Text>已回复</Text>
                                     }

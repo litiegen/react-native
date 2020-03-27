@@ -61,16 +61,16 @@ const styles = StyleSheet.create({
 		justifyContent:'space-evenly'
 	},
 	box:{
-		width:205,
+		width:'45%',
 		height:300,
 		marginTop:10,
 		backgroundColor:'#fff'
 	},
 	image:{
-		width:140,
-		height:140,
-		marginTop:35,
-		marginLeft:45	
+		width:'80%',
+		height:'50%',
+		marginTop:'15%',
+		marginLeft:'10%'	
 	},
 	text3:{
 		width:'90%',

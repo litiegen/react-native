@@ -9,6 +9,7 @@ import {
 	StyleSheet
 }from 'react-native';
 import Hbox from './Hbox'
+import { myFetch } from './utils/api';
 
 import { Icon } from '@ant-design/react-native';
 import { Actions } from 'react-native-router-flux';
@@ -32,12 +33,17 @@ export default class Hlogin extends Component {
 
 	login=()=>{
 		this.setState({isloading:true})
-		AsyncStorage.setItem('user',this.state.username)
-		.then(()=>{
-			this.setState({isloading:false})
-			Actions.home();
-		})
-		
+		myFetch.post('/login',{
+            username:this.state.username,
+            pwd:this.state.pwd
+        })
+        .then(res=>{
+            AsyncStorage.setItem('user',JSON.stringify(res.data))
+            .then(()=>{
+                this.setState({isloading:false})
+                Actions.home();
+            })
+        })
 	}
 	
 	register=()=>{

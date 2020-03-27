@@ -60,9 +60,11 @@ export default class Huser extends Component {
 	
 	componentWillUpdate(){
 		AsyncStorage.getItem('user').then((res)=>{
-			if(res!=null){
+			let user=JSON.parse(res)
+			if(user!=null){
+				console.log(user.username)
 				this.setState({
-					username:res,
+					username:user.username,
 					out:''
 				})
 			}
@@ -151,28 +153,28 @@ export default class Huser extends Component {
 				</View>
 
 				<View style={styles.under2}>
-					<View style={styles.box}>
+					<View style={styles.box1}>
 						<Icon style={{fontSize:25}} name='tool' />
 						<Text style={styles.word}>居家维修保养</Text>
 					</View>
-					<View style={styles.box}>
+					<View style={styles.box1}>
 						<Icon style={{fontSize:25}} name='car' />
 						<Text style={styles.word}>出行接送</Text>
 					</View>
-					<View style={styles.box}>
+					<View style={styles.box1}>
 						<Icon style={{fontSize:25}} name='user' />
 						<Text style={styles.word}>我的受赠人</Text>
 					</View>
-					<View style={styles.box}>
+					<View style={styles.box1}>
 						<Icon style={{fontSize:25}} name='bank' />
 						<Text style={styles.word}>我的住宿优惠</Text>
 					</View>
-					<View style={styles.box}>
+					<View style={styles.box1}>
 						<Icon style={{fontSize:25}} name='flag' />
 						<Text style={styles.word}>我的活动</Text>
 					</View>
-					<TouchableOpacity onPress={()=>Actions.release()}>
-						<View style={styles.box} >
+					<TouchableOpacity style={styles.box1} onPress={()=>Actions.release()}>
+						<View style={{alignItems:'center',justifyContent:'center'}}  >
 							<Icon style={{fontSize:25}} name='form' />
 							<Text style={styles.word}>我的发布</Text>
 						</View>
@@ -224,7 +226,7 @@ const styles = StyleSheet.create({
 		backgroundColor:'#ffffff'			
 	},
 	under:{
-		height:300,
+		height:'30%',
 		marginTop:2,
 		width:'100%',
 		flexWrap:'wrap',
@@ -233,13 +235,13 @@ const styles = StyleSheet.create({
 		justifyContent:'flex-start'
 	},
 	under2:{
-		height:200,
+		height:'20%',
 		marginTop:2,
 		width:'100%',
 		flexWrap:'wrap',
 		flexDirection:'row',
 		backgroundColor:'#ffffff',
-		justifyContent:'space-evenly'
+		justifyContent:'flex-start'
 	},
 	under3:{
 		height:60,
@@ -250,10 +252,14 @@ const styles = StyleSheet.create({
 		backgroundColor:'#ffffff'
 	},
 	box:{
-		width:120,
-		height:80,
-		marginTop:15,
-		marginLeft:24,
+		width:'33%',
+		height:'33%',
+		alignItems:'center',
+		justifyContent:'center'
+	},
+	box1:{
+		width:'33%',
+		height:'50%',
 		alignItems:'center',
 		justifyContent:'center'
 	},
